@@ -3,6 +3,7 @@
     <notifications></notifications>
     <side-bar>
       <template slot="links">
+<div class="hiddinIniting">
         <sidebar-item
           :link="{
             name: 'Dashboard',
@@ -11,7 +12,7 @@
           }"
         >
         </sidebar-item>
-
+        
         <sidebar-item
             :link="{
               name: 'Icons',
@@ -28,7 +29,16 @@
                 icon: 'ni ni-pin-3 text-orange'
               }">
         </sidebar-item>
+</div>
 
+        <sidebar-item
+              :link="{
+                name: 'Formulario',
+                path: '/formulario',
+                icon: 'ni ni-bullet-list-67 text-red'
+                }">
+        </sidebar-item>
+<div class="hiddinIniting">
         <sidebar-item
               :link="{
                 name: 'User Profile',
@@ -37,6 +47,9 @@
                 }">
         </sidebar-item>
 
+
+
+
         <sidebar-item
                 :link="{
                   name: 'Tables',
@@ -44,7 +57,7 @@
                   icon: 'ni ni-bullet-list-67 text-red'
                 }">
         </sidebar-item>
-
+</div>
         <sidebar-item
                   :link="{
                     name: 'Login',

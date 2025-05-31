@@ -6,7 +6,7 @@ import NotFound from '@/views/NotFoundPage.vue';
 const routes = [
   {
     path: '/',
-    redirect: 'dashboard',
+    redirect: 'formulario',
     component: DashboardLayout,
     children: [
       {
@@ -26,6 +26,11 @@ const routes = [
         path: '/profile',
         name: 'profile',
         component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/UserProfile.vue')
+      },
+      {
+        path: '/formulario',
+        name: 'formulario',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Formulario.vue')
       },
       {
         path: '/maps',

@@ -11,6 +11,7 @@
   "dependencies": {
     "bootstrap": "4.3.1",
     "bootstrap-vue": "^2.5.0",
+    "bootstrap-vue-argon-dashboard": "file:",
     "chart.js": "^2.9.3",
     "d3": "^5.7.0",
     "datamaps": "^0.5.9",
@@ -39,10 +40,10 @@
     "@vue/cli-service": "^3.7.0",
     "@vue/eslint-config-prettier": "^4.0.1",
     "babel-plugin-component": "^1.1.0",
+    "cross-env": "^7.0.3",
     "node-sass": "^9.0.0",
     "sass-loader": "^10",
-    "vue-template-compiler": "^2.6.11",
-    "cross-env": "^7.0.3"
+    "vue-template-compiler": "^2.6.11"
   },
   "postcss": {
     "plugins": {
@@ -54,6 +55,6 @@
     "last 2 versions",
     "not ie <= 10"
   ],
-  "author": "Creative Tim - https://www.creative-tim.com/",
-  "description": "BootstrapVue Argon Dashboard"
+  "author": "(gjesus)",
+  "description": "Formulario com BootstrapVue Argon"
 }

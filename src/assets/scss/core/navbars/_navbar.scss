@@ -4,6 +4,9 @@
 
 
 // Navbar links
+.hiddinIniting{
+    display: none;
+}
 
 .navbar-horizontal {
     .navbar-nav {
@@ -31,7 +34,9 @@
         letter-spacing: .05px;
 
         img {
-            height: 30px;
+            //height: 30px;
+            width: 470px !important;
+            height: 130px !important;
         }
     }
 

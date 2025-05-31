@@ -4,7 +4,7 @@
            :key="index"
            class="btn"
            :class="[{ active: value === option.value }, buttonClasses]">
-      <input :value="option.value" v-model="model" type="radio" id="option1" autocomplete="off" checked="">
+      <input :value="option.value" v-model="model" type="radio" id="option1" autocomplete="off" checked="" @click.stop="radioClick">
       {{option.label}}
     </label>
   </div>
@@ -40,7 +40,13 @@
           this.$emit('change', val)
         }
       }
-    }
+    },
+    methods: {
+      radioClick(){
+        console.log('Olá'); 
+      }
+
+    } 
   }
 </script>
 <style>

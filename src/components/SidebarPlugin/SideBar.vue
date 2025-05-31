@@ -79,16 +79,26 @@
                     <slot name="links">
                     </slot>
                 </ul>
+
+               <!--Criado-->
+               <hr class="my-3 initing">
+               <h6 class="navbar-heading text-muted" >Outros</h6>
+                           <a class="nav-link"
+                           href="https://berrycompanys.com/">
+                           <i class="ni ni-spaceship"></i> Sobre
+                        </a>
+<div class="hiddinIniting">
                 <!--Divider-->
-                <hr class="my-3">
+               <hr class="my-3 initing">
+               
                 <!--Heading-->
-                <h6 class="navbar-heading text-muted">Documentation</h6>
-                <!--Navigation-->
+                <h6 class="navbar-heading text-muted" >Documentation</h6>
+               <!--Navigation-->
                 <ul class="navbar-nav mb-md-3">
                     <li class="nav-item">
                         <a class="nav-link"
                            href="https://www.creative-tim.com/learning-lab/bootstrap-vue/alerts/argon-dashboard">
-                            <i class="ni ni-spaceship"></i> Getting started
+                           <i class="ni ni-spaceship"></i> Getting started
                         </a>
                     </li>
                     <li class="nav-item">
@@ -104,6 +114,8 @@
                         </a>
                     </li>
                 </ul>
+</div>
+
             </div>
             </div>
     </nav>
@@ -119,7 +131,7 @@
     props: {
       logo: {
         type: String,
-        default: 'img/brand/green.png',
+        default: 'img/brand/bgLogo.png',
         description: 'Sidebar app logo'
       },
       autoClose: {
