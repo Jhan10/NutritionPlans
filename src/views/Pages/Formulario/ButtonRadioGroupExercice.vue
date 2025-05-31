@@ -57,8 +57,8 @@
             chkds.push(elem.value)
           }
         });
-        console.log('exerc');
-        console.log(chkds);
+        //console.log('exerc');
+        //console.log(chkds);
         return chkds;
       }
 

@@ -57,8 +57,8 @@
             chkds.push(elem.value)
           }
         });
-        console.log('dieta');
-        console.log(chkds);
+        //console.log('dieta');
+        //console.log(chkds);
         return chkds;
       }
     } 

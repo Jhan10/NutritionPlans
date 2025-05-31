@@ -49,7 +49,6 @@
     },
     methods: {
       budgetClick(){
-        console.log('Olá');
         var inpts = document.getElementsByName("option4");
         var chkds =[];
         inpts.forEach(elem => {

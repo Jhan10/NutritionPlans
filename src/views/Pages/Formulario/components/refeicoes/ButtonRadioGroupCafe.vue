@@ -51,7 +51,6 @@
     },
     methods: {
       cafeClick(){
-        console.log('Olá');
         var inpts = document.getElementsByName("option7");
         var chkds =[];
         inpts.forEach(elem => {

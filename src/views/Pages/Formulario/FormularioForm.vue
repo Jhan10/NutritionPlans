@@ -278,8 +278,8 @@ export default {
     };
 
     const res = await this.callApi(data);
-      console.log("response");
-      console.log(res);
+      //console.log("response");
+      //console.log(res);
   },
 
   getDiet(){

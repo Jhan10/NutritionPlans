@@ -49,7 +49,6 @@
     },
     methods: {
       boxClick(){
-        console.log('Olá');
         var inpts = document.getElementsByName("option2");
 
         var chkds =[];

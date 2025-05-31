@@ -42,9 +42,6 @@
       }
     },
     methods: {
-      radioClick(){
-        console.log('Olá'); 
-      }
 
     } 
   }
