@@ -246,7 +246,7 @@ export default {
   methods: {
 
     async callApi(data){
-      const req = await fetch("http://localhost:8090/http://localhost:4000/FormSite"
+      const req = await fetch("https://bot-ia-talk-manager.vercel.app"
       ,{
         method:'POST'
         ,headers:{'Content-Type': 'application/json'}
