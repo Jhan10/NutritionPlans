@@ -195,7 +195,7 @@
       <b-row  slot="footer" >
         <b-col cols="12" class="text-right">
           <div class="loading">
-            <img alt="loading" src="../../../../public/loading.gif" class="loadingImg" style="display: none;">
+            <img alt="loading" src="img/loading.gif" class="loadingImg" style="display: none;">
             <input type="submit" name="formButton" class="btn btn-sm btn-primary submit submitButton" value="Enviar plano">
           </div>
         
