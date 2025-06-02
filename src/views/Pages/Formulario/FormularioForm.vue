@@ -224,7 +224,7 @@ export default {
     ButtonRadioGroupLanchem,
     ButtonRadioGroupAlmoco,
     ButtonRadioGroupLanchet,
-    ButtonRadioGroupJantar
+    ButtonRadioGroupJantar,
 
   },
   data() {
@@ -244,17 +244,28 @@ export default {
     };
   },
   methods: {
+    retornoGenerate(data){
+      console.log(data);
+     alert(data);
+    },
 
     async callApi(data){
-      const req = await fetch("https://bot-ia-talk-manager.vercel.app"
+      const req = await fetch("http://localhost:8090/https://bot-ia-talk-manager-git-main-geans-projects-059a198b.vercel.app"
       ,{
         method:'POST'
         ,headers:{'Content-Type': 'application/json'}
       
       ,body: JSON.stringify(data)
+      }).then((res)=>{
+        console.log("res");
+        console.log(res);
+        console.log("req.json()");
+        console.log(req.json());
+        return req.json();
+      }).catch((data)=>{
+        console.error(data);
+        return data;
       });
-
-      return await req.json();
   },
 
   async sendForm(e){
@@ -276,8 +287,20 @@ export default {
       lanchet: this.getLancheT().toString(),
       jantar: this.getJantar().toString(),
     };
-console.log(data);
-    //const res = await this.callApi(data);
+    console.log(data);
+
+    const res = await this.callApi(data);
+    console.log(res);
+    /* if(res){
+      if(res.status){
+        this.retornoGenerate(res.status);
+      }else{
+        this.retornoGenerate("Não foi possivel recuperar o status da solicitação. Contate o Administrador do sistema.")
+      }
+    }else{
+      this.retornoGenerate("Solicitação não processada. Tente novamente ou contate o Administrador do sistema.")
+    } */
+
       //console.log("response");
       //console.log(res);
   },
