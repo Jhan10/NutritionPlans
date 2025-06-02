@@ -195,8 +195,8 @@
       <b-row  slot="footer" >
         <b-col cols="12" class="text-right">
           <div class="loading">
-            <img alt="loading" src="img/loading.gif" class="loadingImg" style="display: none;">
-            <input type="submit" name="formButton" class="btn btn-sm btn-primary submit submitButton" value="Enviar plano">
+            <img alt="loading" src="img/loading.gif" class="loadingImg" v-show="loadingVisible" :style="loadingVisible">
+            <input type="submit" :disabled="submitButton.disableButtonLoading" name="formButton" class="btn btn-sm btn-primary submit submitButton" :value="submitButton.textName">
           </div>
         
         
@@ -245,19 +245,27 @@ export default {
         country: 'USA',
         postalCode: '',
         aboutMe: `Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.`
-      }
+      },
+      submitButton:{
+        textName: "Enviar plano",
+        disableButtonLoading: false,
+      },
+      loadingVisible: false
     };
   },
   methods: {
     loadingForm(){
-      let btn = document.getElementsByName("formButton")[0];
-      let img = document.getElementsByClassName("loadingImg")[0];
 
-      img.setAttribute("style","display: block;");
+      this.submitButton.disableButtonLoading=true;
+      this.submitButton.textName="Aguarde...";
+      this.loadingVisible=true;
     },
     unload(){
-        let img = document.getElementsByClassName("loadingImg")[0];
-        img.setAttribute("style","display: none;");
+        let btn = document.getElementsByName("formButton")[0];
+
+        btn.removeAttribute("disabled");
+        this.submitButton.textName="Enviar plano";
+        this.loadingVisible=false;
     },
     retornoGenerate(data){
       console.log(data);
@@ -266,7 +274,7 @@ export default {
 
     async callApi(data){
       let y=[{}];
-      const req = await fetch("https://bot-ia-talk-manager.vercel.app/teste"
+      const req = await fetch("https://bot-ia-talk-manager.vercel.app/FormSite"
       ,{
         method:'POST'
         ,headers:{'Content-Type': 'application/json'}
