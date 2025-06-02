@@ -250,22 +250,25 @@ export default {
     },
 
     async callApi(data){
-      const req = await fetch("https://bot-ia-talk-manager-git-main-geans-projects-059a198b.vercel.app/FormSite"
+      let y=[{}];
+      const req = await fetch("https://bot-ia-talk-manager.vercel.app"
       ,{
         method:'POST'
         ,headers:{'Content-Type': 'application/json'}
       
       ,body: JSON.stringify(data)
-      }).then((res)=>{
-        console.log("res");
-        console.log(res);
+      }).then(async (res)=>{
+
         console.log("req.json()");
-        console.log(req.json());
-        return req.json();
+         y=await res.json()
+        console.log(y);
+        
       }).catch((data)=>{
         console.error(data);
         return data;
       });
+      
+      return y;
   },
 
   async sendForm(e){
@@ -291,7 +294,8 @@ export default {
 
     const res = await this.callApi(data);
     console.log(res);
-    /* if(res){
+
+     if(res){
       if(res.status){
         this.retornoGenerate(res.status);
       }else{
@@ -299,7 +303,7 @@ export default {
       }
     }else{
       this.retornoGenerate("Solicitação não processada. Tente novamente ou contate o Administrador do sistema.")
-    } */
+    }
 
       //console.log("response");
       //console.log(res);
