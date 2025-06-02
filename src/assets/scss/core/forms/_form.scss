@@ -114,3 +114,15 @@ textarea[resize="horizontal"] {
 .submitButton{
 font-size: 1.1rem;
 }
+
+.loading{
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        height: 100px;
+
+    img{
+         height: 100px;
+         width: 100px;
+    }
+}

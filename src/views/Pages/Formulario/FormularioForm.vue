@@ -194,7 +194,12 @@
       <div>
       <b-row  slot="footer" >
         <b-col cols="12" class="text-right">
-        <input type="submit" class="btn btn-sm btn-primary submit submitButton" value="Enviar plano">
+          <div class="loading">
+            <img alt="loading" src="../../../../public/loading.gif" class="loadingImg" style="display: none;">
+            <input type="submit" name="formButton" class="btn btn-sm btn-primary submit submitButton" value="Enviar plano">
+          </div>
+        
+        
         </b-col>
       </b-row>
       </div>
@@ -244,6 +249,16 @@ export default {
     };
   },
   methods: {
+    loadingForm(){
+      let btn = document.getElementsByName("formButton")[0];
+      let img = document.getElementsByClassName("loadingImg")[0];
+
+      img.setAttribute("style","display: block;");
+    },
+    unload(){
+        let img = document.getElementsByClassName("loadingImg")[0];
+        img.setAttribute("style","display: none;");
+    },
     retornoGenerate(data){
       console.log(data);
      alert(data);
@@ -251,7 +266,7 @@ export default {
 
     async callApi(data){
       let y=[{}];
-      const req = await fetch("https://bot-ia-talk-manager.vercel.app"
+      const req = await fetch("https://bot-ia-talk-manager.vercel.app/teste"
       ,{
         method:'POST'
         ,headers:{'Content-Type': 'application/json'}
@@ -274,6 +289,7 @@ export default {
   async sendForm(e){
     e.preventDefault();
 
+    this.loadingForm();
     const data = {
       nome: this.user.username,
       email: this.user.email,
@@ -293,6 +309,7 @@ export default {
     console.log(data);
 
     const res = await this.callApi(data);
+    this.unload();
     console.log(res);
 
      if(res){
