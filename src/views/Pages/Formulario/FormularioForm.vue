@@ -250,7 +250,7 @@ export default {
     },
 
     async callApi(data){
-      const req = await fetch("https://bot-ia-talk-manager-git-main-geans-projects-059a198b.vercel.app"
+      const req = await fetch("https://bot-ia-talk-manager-git-main-geans-projects-059a198b.vercel.app/FormSite"
       ,{
         method:'POST'
         ,headers:{'Content-Type': 'application/json'}
