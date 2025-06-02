@@ -276,8 +276,8 @@ export default {
       lanchet: this.getLancheT().toString(),
       jantar: this.getJantar().toString(),
     };
-
-    const res = await this.callApi(data);
+console.log(data);
+    //const res = await this.callApi(data);
       //console.log("response");
       //console.log(res);
   },
