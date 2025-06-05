@@ -6,6 +6,8 @@
       </b-col>
       <b-col cols="4" class="text-right">
         <a href="#!" class="btn btn-sm btn-primary">Configurações</a>
+        <button v-if="false" type="button" class="btn btn-sm btn-primary" @click="teste">teste sql</button>
+        
       </b-col>
     </b-row>
 
@@ -321,8 +323,8 @@ export default {
     console.log(res);
 
      if(res){
-      if(res.status){
-        this.retornoGenerate(res.status);
+      if(res.sol && res.sol.status){
+        this.retornoGenerate(res.sol.status);
       }else{
         this.retornoGenerate("Não foi possivel recuperar o status da solicitação. Contate o Administrador do sistema.")
       }
@@ -411,7 +413,57 @@ export default {
       return value;
     }
     return null
+   },
+   async teste(){
+
+    const data = {
+      nome: "Duda site002",
+      email: "geandinho2010@gmail.com",
+      dieta: "perderpeso",
+      altura: "1,78",
+      peso: 108,
+      nivelExer: "sedentario",
+      restricoes: [
+        "gluten"
+    ],
+      preferencias: "bolo",
+      orcamento: "Até R$150",
+      cafe: "nfaz",
+      lanchem: "10",
+      almoco: "12",
+      lanchet: "nfaz",
+      jantar: "20",
+    };
+
+    console.log(data);
+
+
+    let y=[{}];
+      const req = await fetch("http://bot-ia-talk-manager.vercel.app/teste"
+      ,{
+        method:'POST'
+        ,headers:{'Content-Type': 'application/json'}
+      
+      ,body: JSON.stringify(data)
+      }).then(async (res)=>{
+
+        console.log("req.json()");
+         y=await res.json()
+        console.log(y);
+        
+      }).catch((data)=>{
+        console.error(data);
+      });
+
+    this.unload();
+    console.log(final);
+
+     if(res){
+      if(res.status){
+        this.retornoGenerate(res.status);
    }
+  }
+}
   },
   mounted(){
   }
