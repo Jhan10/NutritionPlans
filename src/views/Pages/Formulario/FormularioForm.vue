@@ -5,9 +5,31 @@
         <h3 class="mb-0">Gerar dieta </h3>
       </b-col>
       <b-col cols="4" class="text-right">
-        <a href="#!" class="btn btn-sm btn-primary">Configurações</a>
-        <button v-if="false" type="button" class="btn btn-sm btn-primary" @click="teste">teste sql</button>
-        
+        <button
+        class="btn btn-sm btn-primary"
+        name="settings"
+        @click="overlay_show = true"
+        >Configurações
+        </button>
+        <card
+        v-show="overlay_show"
+        class="settings_overlay"
+        >
+        <b-row>
+          <label class="form-control-label">
+            Modo teste?
+          <input :checked="testModeChk"  type="checkbox" id="testModeChkId" class="form-control">
+          </label>
+          <div slot="footer" class="row settingsBtn">
+            <button
+            @click="saveSettings"
+            class="btn btn-sm btn-primary"
+          >
+            Salvar
+            </button>
+          </div>
+        </b-row>
+      </card>
       </b-col>
     </b-row>
 
@@ -196,12 +218,14 @@
       <div>
       <b-row  slot="footer" >
         <b-col cols="12" class="text-right">
-          <div class="loading">
+          <div class="loading" id="loadingAlert">
+            <info-count-down ref="child" name="count-down"></info-count-down>
             <img alt="loading" src="img/loading.gif" class="loadingImg" v-show="loadingVisible" :style="loadingVisible">
             <input type="submit" :disabled="submitButton.disableButtonLoading" name="formButton" class="btn btn-sm btn-primary submit submitButton" :value="submitButton.textName">
           </div>
-        
-        
+          <div v-show="testAreaVisible">
+            <button v-if="true" type="submit" class="btn btn-sm btn-primary submit submitButton m-1 btn-info" @click="testSend">teste</button>
+          </div>
         </b-col>
       </b-row>
       </div>
@@ -219,6 +243,8 @@ import ButtonRadioGroupLanchem from './components/refeicoes/ButtonRadioGroupLanc
 import ButtonRadioGroupAlmoco from './components/refeicoes/ButtonRadioGroupAlmoco.vue';
 import ButtonRadioGroupLanchet from './components/refeicoes/ButtonRadioGroupLancheT.vue';
 import ButtonRadioGroupJantar from './components/refeicoes/ButtonRadioGroupJantar.vue';
+import InfoCountDown from './components/InfoCountDown.vue';
+
 
 export default {
   components: {
@@ -232,6 +258,7 @@ export default {
     ButtonRadioGroupAlmoco,
     ButtonRadioGroupLanchet,
     ButtonRadioGroupJantar,
+    InfoCountDown
 
   },
   data() {
@@ -252,31 +279,39 @@ export default {
         textName: "Enviar plano",
         disableButtonLoading: false,
       },
-      loadingVisible: false
+      ApiBITM:{
+        url: 'https://bot-ia-talk-manager.vercel.app',
+        FormSite:'/FormSite',
+        fullUrl(method){
+          return this.url + method;
+        }
+      },
+      testAreaVisible: localStorage.getItem("testModeChk"),
+      loadingVisible: false,
+      overlay_show: false,
+      testModeChk:  localStorage.getItem("testModeChk"),
+      
     };
   },
   methods: {
-    loadingForm(){
+    saveSettings(){
+      this.testModeChk = document.getElementById("testModeChkId").checked;
+      
+      if(!this.testModeChk){
+        this.testAreaVisible = false
+        localStorage.removeItem("testModeChk");
+      }else{
+        this.testAreaVisible = true;
+        localStorage.testModeChk = this.testModeChk;
+      }
 
-      this.submitButton.disableButtonLoading=true;
-      this.submitButton.textName="Aguarde...";
-      this.loadingVisible=true;
-    },
-    unload(){
-        let btn = document.getElementsByName("formButton")[0];
-
-        btn.removeAttribute("disabled");
-        this.submitButton.textName="Enviar plano";
-        this.loadingVisible=false;
-    },
-    retornoGenerate(data){
-      console.log(data);
-     alert(data);
+      this.overlay_show = false
     },
 
-    async callApi(data){
+    async callApi(url,data){
       let y=[{}];
-      const req = await fetch("https://bot-ia-talk-manager.vercel.app/FormSite"
+      const req = await fetch(
+        url
       ,{
         method:'POST'
         ,headers:{'Content-Type': 'application/json'}
@@ -307,34 +342,128 @@ export default {
       altura: this.user.altura,
       peso: this.user.peso,
       nivelExer: this.getNivelExer().toString(),
-      restricoes: Array.from(this.getRestritions()),
+      restricoes: Array.from(this.getRestritions(),),
       preferencias: this.user.preferencias,
       orcamento: this.getOrcamento().toString(),
       cafe: this.getCafe().toString(),
       lanchem: this.getLancheM().toString(),
       almoco: this.getAlmoco().toString(),
       lanchet: this.getLancheT().toString(),
-      jantar: this.getJantar().toString(),
+      jantar: this.getJantar().toString()
     };
     console.log(data);
 
-    const res = await this.callApi(data);
-    this.unload();
-    console.log(res);
+    let res = {};
+    if(
+      data.nome == null
+      || data.email == null
+      || data.dieta == null
+      || data.altura == null
+      || data.peso == null
+      || data.nivelExer == null
+      || data.restricoes == null
+      || data.preferencias == null
+      || data.orcamento == null
+      || data.cafe == null
+      || data.lanchem == null
+      || data.almoco == null
+      || data.lanchet == null
+      || data.jantar == null
+    ){
+      this.unload();
+      this.$refs.child.staticWarn("Verifique o formulário, um ou mais campos estão vazios!", "danger");
+    }else{
 
-     if(res){
-      if(res.sol && res.sol.status){
-        this.retornoGenerate(res.sol.status);
+      const url = this.ApiBITM.fullUrl(this.ApiBITM.FormSite);
+      res = await this.callApi(url, data);
+      this.unload();
+      console.log(res);
+
+      if(res){
+        if(res.sol && res.sol.status){
+        this.$refs.child.staticWarn(res.sol.status, "success");
+        //this.retornoGenerate(res.sol.status);
       }else{
-        this.retornoGenerate("Não foi possivel recuperar o status da solicitação. Contate o Administrador do sistema.")
+        this.$refs.child.staticWarn("Não foi possivel recuperar o status da solicitação. Contate o Administrador do sistema.", "danger");
+        //this.retornoGenerate("Não foi possivel recuperar o status da solicitação. Contate o Administrador do sistema.");
       }
     }else{
-      this.retornoGenerate("Solicitação não processada. Tente novamente ou contate o Administrador do sistema.")
+      this.$refs.child.staticWarn("Solicitação não processada. Tente novamente ou contate o Administrador do sistema.", "danger");
+      //this.retornoGenerate("Solicitação não processada. Tente novamente ou contate o Administrador do sistema.")
+    }
     }
 
       //console.log("response");
       //console.log(res);
   },
+     async testSend(e){
+      e.preventDefault();
+      
+      this.loadingForm();
+      const data = {
+      email: this.user.email,
+      teste: true
+      }
+      console.log("data");
+      console.log(data);
+      let res = {};
+if(
+      data.email == ''
+      || data.teste == null
+    ){
+      this.unload();
+      this.$refs.child.staticWarn("(teste)Campo vazio! Preencha o campo *Email*", "danger");
+    }else{
+
+      const url = this.ApiBITM.fullUrl(this.ApiBITM.FormSite);
+      res = await this.callApi(url, data);
+      this.unload();
+      console.log(res);
+      
+      if(res){
+        if(res.sol && res.sol.status){
+        this.$refs.child.staticWarn(res.sol.status, "success");
+        //this.retornoGenerate(res.sol.status);
+        }else{
+        this.$refs.child.staticWarn("(teste)Não foi possivel recuperar o status da solicitação. Contate o Administrador do sistema.", "danger");
+        //this.retornoGenerate("(teste)Não foi possivel recuperar o status da solicitação. Contate o Administrador do sistema.");
+        }
+      }else{
+      this.$refs.child.staticWarn("(teste)Solicitação não processada. Tente novamente ou contate o Administrador do sistema.", "danger");
+      //this.retornoGenerate("(teste)Solicitação não processada. Tente novamente ou contate o Administrador do sistema.")
+      }
+
+    }
+
+      console.log("response");
+      console.log(res);
+
+    },
+    loadingForm(){
+      let btn = document.getElementsByName("formButton")[0];
+
+      btn.setAttribute("disabled",true);
+      this.submitButton.textName="Aguarde...";
+      this.loadingVisible=true;
+      this.$refs.child.countingWarn("Seu Plano de Dieta está sendo gerado, e será enviado para seu email. Aguarde ", 20, "info");
+      const alert = document.getElementById("loadingAlert");
+      //alert.focus();
+      let cd = document.getElementsByName("count-down")[0];
+
+      cd.focus();
+    },
+    unload(){
+        let btn = document.getElementsByName("formButton")[0];
+
+        btn.removeAttribute("disabled");
+        this.submitButton.textName="Enviar plano";
+        this.loadingVisible=false;
+        //this.$refs.child.disposeWarns();
+    },
+    retornoGenerate(data){
+      console.log(data);
+     alert(data);
+    },
 
   getDiet(){
     let arr = ButtonRadioGroup.methods.dietaClick();
@@ -364,6 +493,7 @@ export default {
     }
     return arr;
    }
+   return [];
   },
   getNivelExer(){
     let nivelEx = ButtonRadioGroupExercice.methods.exerciceClick();
@@ -464,8 +594,10 @@ export default {
    }
   }
 }
+
   },
   mounted(){
+
   }
 };
 </script>

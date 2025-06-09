@@ -126,3 +126,35 @@ font-size: 1.1rem;
          width: 100px;
     }
 }
+
+.loadingDiv {
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+    width: 90%;
+
+    .alert-warning{
+        width: 100%;
+    }
+}
+
+.settings_overlay{
+    position: absolute !important;
+    left: 90%;
+    width: 100%;
+    height: 400%;
+}
+
+.settingsBtn {
+    width: 80%;
+    display: flex
+;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-items: flex-end;
+    align-content: center;
+}
